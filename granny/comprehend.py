@@ -9,12 +9,11 @@ def smog( sentences ):
 	"""
 	poly_words = 0
 
-	for s in sentences[0:30]:
+	for s in sentences:
 		for w in s:
-			if len(h.positions(w)) > 1:
+			print w
+			print len(h.positions(w)) + 1
+			if len(h.positions(w)) + 1 > 2:
 				poly_words += 1
 	
-	if len(sentences) < 30:
-		poly_words /= len(sentences) / 30.0
-
-	return 3.0+sqrt(poly_words)
+	return 3.1291+1.043*sqrt(poly_words*30/len(sentences))
