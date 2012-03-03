@@ -12,6 +12,8 @@ CODE_NOUNINATOR2 = re.compile(r'\s[\w_]+\.[\w_]+([^\w]|$)')
 QUOTES = re.compile(r'["\']')
 ARGY_1 = re.compile(r'(^|\n)\w+: ')
 ARGY_2 = re.compile(r'(^|\n)\w+ -- ')
+PUNCT = re.compile(r'[:]\n')
+SENTENCES = re.compile(r'[^\w]?[A-Z].*\.')
 
 
 class Analyzer(object):
@@ -23,7 +25,8 @@ class Analyzer(object):
   def analyze(self, path):
     code = open(path).read()
     docstrings = self.lex_docstrings(code)
-    return docstrings
+    sentences = self.find_sentences(docstrings)
+    return sentences
 
   def lex_docstrings(self, code):
     lexer = code_analyzer.Lexer(code, 'python', 'long')
@@ -35,6 +38,19 @@ class Analyzer(object):
 
     return o
 
+  def find_sentences(self, docs):
+    o = []
+    for doc in docs:
+      match = SENTENCES.findall(doc)
+      for s in match:
+        o.append(self._split_sentence(s).split())
+    return o
+
+  def _split_sentence(self, s):
+    s = s.strip()
+    s = s.replace('.', '')
+    return s
+
   def _normalize_string(self, s):
     s = WHITESPACE.sub(' ', s)
     s = LEADING.sub('\n', s)
@@ -43,4 +59,5 @@ class Analyzer(object):
     s = QUOTES.sub('', s)
     s = ARGY_1.sub('\n', s)
     s = ARGY_2.sub('\n', s)
+    s = PUNCT.sub('.\n', s)
     return s
