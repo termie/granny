@@ -1,9 +1,13 @@
 import granny
 
+from granny import comprehend
 
 analyzer = granny.Analyzer()
 
 docs = analyzer.analyze('granny/code_analyzer.py')
+for d in docs:
+  print d
 
-for x in docs:
-  print x
+x = comprehend.smog(docs)
+print x
+
