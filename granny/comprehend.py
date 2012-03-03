@@ -1,7 +1,7 @@
 from hyphenator import Hyphenator
 from math import sqrt
 
-h = Hyphenator("/usr/share/myspell/dicts/hyph_en_CA.dic", left=0, right=0)
+h = Hyphenator("./hyph_en_CA.dic", left=0, right=0)
 
 def smog( sentences ):
 	poly_words = 0
