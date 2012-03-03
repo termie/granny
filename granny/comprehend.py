@@ -17,9 +17,7 @@ def smog(sentences):
 
   for s in sentences:
     for w in s:
-      print w
-      print len(h.positions(w)) + 1
-    if len(h.positions(w)) + 1 > 2:
-      poly_words += 1
+      if len(h.positions(w)) + 1 > 2:
+        poly_words += 1
 	
   return 3.1291+1.043*sqrt(poly_words*30/len(sentences))
