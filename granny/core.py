@@ -13,7 +13,7 @@ QUOTES = re.compile(r'["\']')
 ARGY_1 = re.compile(r'(^|\n)\w+: ')
 ARGY_2 = re.compile(r'(^|\n)\w+ -- ')
 PUNCT = re.compile(r'[:]\n')
-SENTENCES = re.compile(r'[^\w]?[A-Z].*\.')
+SENTENCES = re.compile(r'[^\w]?[A-Z].*?\.', re.S)
 
 
 class Analyzer(object):
@@ -25,6 +25,8 @@ class Analyzer(object):
   def analyze(self, path):
     code = open(path).read()
     docstrings = self.lex_docstrings(code)
+    for d in docstrings:
+      print d
     sentences = self.find_sentences(docstrings)
     return sentences
 
@@ -60,4 +62,6 @@ class Analyzer(object):
     s = ARGY_1.sub('\n', s)
     s = ARGY_2.sub('\n', s)
     s = PUNCT.sub('.\n', s)
+    s = s.replace('True', 'true')
+    s = s.replace('False', 'false')
     return s
