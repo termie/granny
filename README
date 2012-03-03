@@ -1,1 +1,6 @@
 Speak good
+
+
+Lexically analyze the english content of comments and documentation in commits
+to provide information about the reading comprehension levels of the involved
+authors.
