@@ -1,16 +1,9 @@
-#from docutils.utils import code_analyzer
-import code_analyzer
+import granny
 
 
+analyzer = granny.Analyzer()
 
-f = open('policy.py').read()
+docs = analyzer.analyze('granny/code_analyzer.py')
 
-lex = code_analyzer.Lexer(f, 'python', 'long')
-for kind, obj in lex:
-  #print kind, obj
-
-  if set(kind) >= set(('literal', 'string', 'doc')):
-    print obj
-
-  if set(kind) >= set(('comment',)):
-    print obj
+for x in docs:
+  print x
