@@ -1,4 +1,4 @@
-import sys
+import sys, json
 
 scores = dict()
 
@@ -13,5 +13,10 @@ for l in lines:
   
   scores[email] = scores.get(email, 0) + new - old
 
+emails = list()
+
 for email in scores:
-	print email, scores[email]
+	emails.append( {'email': email, 'score':scores[email]} )
+
+emails = sorted( emails, key = lambda x: x['email'] )
+print json.dumps(emails)
